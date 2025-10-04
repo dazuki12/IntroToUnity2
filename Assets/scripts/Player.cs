@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem.LowLevel;
 
@@ -8,6 +9,7 @@ public class Player : MonoBehaviour
     public float maxHealth = 100f;
     public float currentHealth;
     public GameObject hud;
+    public float damage = 10f;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -76,5 +78,17 @@ public class Player : MonoBehaviour
     {
         currentHealth = maxHealth;
     }
-    
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (Input.GetMouseButtonDown((int)MouseButton.Right) && other.gameObject.CompareTag("Enemy"))
+        {
+            animator.SetTrigger("Kick");
+            
+            other.gameObject.GetComponent<Enemy>().TakeDamage(damage);
+            
+
+        }
+        
+    }
 }
